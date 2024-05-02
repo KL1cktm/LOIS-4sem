@@ -15,6 +15,7 @@ public class LogicBase {
     public void checkImpracticabilityForm(String formula) { //проверка является ли формула невыполнимой
         this.logicFunction = formula;
         createReversPolishWrite();
+        reverseElementsInStack();
         System.out.println(stack);
     }
     private void createReversPolishWrite() { //создание таблицы истинности
@@ -29,7 +30,7 @@ public class LogicBase {
                     }
                 }
             }
-            if (this.logicFunction.charAt(i) == '(') { //проверка строки на символ (, для записи в сте операторов
+            if (this.logicFunction.charAt(i) == '(') { //проверка строки на символ (, для записи в стек операторов
                 operators.push("(");
             } else {       //запись в стек операторов
                 for (String operator : this.operators) {
@@ -54,7 +55,12 @@ public class LogicBase {
 
     }
     private void reverseElementsInStack() {
-
+        Stack<String> reverseStack = new Stack<>();
+        int size = this.stack.size();
+        for (int i=0;i<size;i++) {
+            reverseStack.push(this.stack.pop());
+        }
+        this.stack = reverseStack;
     }
     private void addOperatorsOnMainStack(Stack<String> operators) { //записываем в стек операндов операторы для создания ОПЗ
         while (true) {
