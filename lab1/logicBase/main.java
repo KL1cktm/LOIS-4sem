@@ -5,7 +5,12 @@ public class main {
     {
         LogicBase logicBase = new LogicBase();
 //        logicBase.checkImpracticabilityForm("(A->(B/\\C))");
-        System.out.println("(((A->B)/\\(C\\/D))");
-        logicBase.checkImpracticabilityForm("(((A->B)/\\(C\\/D))");
+//        System.out.println("(((A->B)/\\(C\\/D))");
+//        logicBase.checkImpracticabilityForm("((A->B)/\\(C\\/D))");
+//        System.out.println("(((!P)->(Q/\\R))~((!(!(P\\/Q)))->S))");
+        logicBase.checkImpracticabilityForm("(((!P)->(Q/\\R))~((!(!(P\\/Q)))->S))");
+        //Result:  0000100101010101
+        //WebSite: 0000100101010101
+//        logicBase.checkImpracticabilityForm("(A/\\(!A))");
     }
 }
