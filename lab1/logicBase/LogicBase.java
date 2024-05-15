@@ -83,7 +83,7 @@ public class LogicBase {
         }
     }
 
-    public boolean verify(String formula) { // Если синтаксис и атомы корректные
+    private boolean verify(String formula) { // Если синтаксис и атомы корректные
         return checkSymbols(formula) && syntax(formula);
     }
 
