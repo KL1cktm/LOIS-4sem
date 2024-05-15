@@ -8,11 +8,8 @@ import java.util.Stack;
 
 public class LogicBase {
     private String logicFunction;
-    private final List<Character> alphabet = List.of('0', '1', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-            'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    private final List<Character> alphabet = List.of('0', '1', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
     private final List<String> operators = List.of("/\\", "\\/", "->", "!", "~", ")", "(");
-
-    private static final List<Character> atomFormula = List.of('0','1');
     private List<Character> elements = new ArrayList<>();
     private HashMap<Character, Character> elementValue = new HashMap<>();
     private Stack<String> stack = new Stack<>();
@@ -20,8 +17,9 @@ public class LogicBase {
 
     private record Pair<T, U>(T first, U second) {
     }
+
     public void checkImpracticabilityForm(String formula) { //проверка является ли формула невыполнимой
-        if (verify(formula)) {
+        if (!verify(formula)) {
             return;
         }
         this.logicFunction = formula;
@@ -80,7 +78,7 @@ public class LogicBase {
         if (formula.length() == 1) { // Если смогли видоизменить формулу, то она корректна
             return true;
         } else { // Иначе есть ошибки
-            System.out.println("Syntax error");
+            System.out.println("Синтаксическая ошибка");
             return false;
         }
     }
@@ -90,7 +88,7 @@ public class LogicBase {
     }
 
     private boolean checkAtom(String formula, int index) {
-        for (char c : atomFormula) {
+        for (char c : this.alphabet) {
             if (formula.charAt(index) == c) { // Если совпадает
                 return true;
             }
@@ -102,7 +100,7 @@ public class LogicBase {
         for (int i = 0; i < formula.length(); i++) {
             Pair<Boolean, Integer> connective = checkConnective(formula, i); // Сохраняем данные о связке (если она существует, 1 - занимает 2 символа ; 0 - один символ
             if (!checkAtom(formula, i) && !connective.first) { // Если символ не атом и не связка
-                System.out.println("Incorrect symbols");
+                System.out.println("Неверный ввод");
                 return false;
             }
             if (connective.second > 0) {
@@ -112,6 +110,7 @@ public class LogicBase {
         }
         return true;
     }
+
     private Pair<Boolean, Integer> checkConnective(String formula, int index) {
         if (index + 1 < formula.length()) { // Следующие символы не могут стоять в самом конце строки
             if (formula.charAt(index) == '/' && formula.charAt(index + 1) == '\\') { // Для конъюкции, занимает два символа
