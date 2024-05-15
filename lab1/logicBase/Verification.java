@@ -122,6 +122,6 @@ class Verification {
         return new Pair<>(false, 0); // Неккоректная связка
     }
 
-    private record Pair<T, U>(T first, U second) {
+    record Pair<T, U>(T first, U second) {
     }
 }
