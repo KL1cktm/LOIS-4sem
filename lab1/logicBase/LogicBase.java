@@ -11,6 +11,8 @@ public class LogicBase {
     private final List<Character> alphabet = List.of('0', '1', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
     private final List<String> operators = List.of("/\\", "\\/", "->", "!", "~", ")", "(");
+
+    private static final List<Character> atomFormula = List.of('0','1');
     private List<Character> elements = new ArrayList<>();
     private HashMap<Character, Character> elementValue = new HashMap<>();
     private Stack<String> stack = new Stack<>();
