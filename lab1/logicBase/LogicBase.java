@@ -1,9 +1,13 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Лабораторная работа №1 по дисциплине ЛОИС
+// Выполнена студентами гр. 221702 БГУИР Юргилевичем Е.В., Целуйко Д.А.
+// Проверяет, является ли формула сокращённого языка логики выссказываний невыполнимой (противоречивой).
+// 15.05.2024
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 package logicBase;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 
 public class LogicBase {
@@ -18,12 +22,14 @@ public class LogicBase {
     private record Pair<T, U>(T first, U second) {
     }
 
-    public void checkImpracticabilityForm(String formula) { //проверка является ли формула невыполнимой
+    public void checkImpracticabilityForm() { //проверка является ли формула невыполнимой
+        System.out.print("Введите логическую формулу: ");
+        Scanner scanner = new Scanner(System.in);
+        String formula = scanner.nextLine();
         if (!verify(formula)) {
             return;
         }
         this.logicFunction = formula;
-        System.out.println(this.logicFunction);
         findUniqElements();
         createReversPolishWrite();
         reverseElementsInStack();
@@ -32,6 +38,13 @@ public class LogicBase {
             if (token == '1') {
                 System.out.println("Формула является выполнимой");
                 return;
+            } else {
+                for (int i=2;i<28;i++) {
+                    if (token == alphabet.get(i)) {
+                        System.out.println("Формула является выполнимой");
+                        return;
+                    }
+                }
             }
         }
         System.out.println("Формула является невыполнимой");
@@ -66,7 +79,7 @@ public class LogicBase {
                                     }
                                 }
                                 formula = formula.substring(0, j) + "X" + formula.substring(j + 1); // Заменяем подформулу на атомарную
-                                formula = formula.replaceAll("\\s+", ""); // Удаляем проблемы
+                                formula = formula.replaceAll(" ", ""); // Удаляем пр1облемы
                             }
                             break;
                         }
@@ -84,6 +97,13 @@ public class LogicBase {
     }
 
     private boolean verify(String formula) { // Если синтаксис и атомы корректные
+        StringBuilder stringBuilder = new StringBuilder(formula);
+        for (int i=0;i<stringBuilder.length();i++) {
+            if (stringBuilder.charAt(i) == ' ') {
+                stringBuilder.deleteCharAt(i--);
+            }
+        }
+        formula = stringBuilder.toString();
         return checkSymbols(formula) && syntax(formula);
     }
 
@@ -104,7 +124,6 @@ public class LogicBase {
                 return false;
             }
             if (connective.second > 0) {
-                // i += connective.second
                 i++; // Если связка занимает два символа, инкремент
             }
         }
@@ -253,7 +272,7 @@ public class LogicBase {
     private void createNewInterpretation() {  //создание всех интерпритаций
         int number = 0;
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < Math.pow(this.elements.size(), 2); i++) {
+        for (int i = 0; i < Math.pow(2,this.elements.size()); i++) {
             String binaryNumber = Integer.toBinaryString(number++);
             for (int j = 0; j < this.elements.size() - binaryNumber.length(); j++) {
                 stringBuilder.append('0');
